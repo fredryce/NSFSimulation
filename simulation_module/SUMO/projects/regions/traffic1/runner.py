@@ -72,6 +72,9 @@ def generate_routefile():
 # end generate_routefile
 
 
+
+
+
 ###############################
 # Execute the TraCI control loop
 ###############################
@@ -79,7 +82,18 @@ def run():
   n_step = 0
   initialize(traci)
   
+  print(traci.vehicle.getIDList())
+
   while (n_step < config.n_time_steps):
+    #print(traci.vehicle.getIDList())
+
+    for veh_id in traci.simulation.getDepartedIDList():
+      traci.vehicle.subscribe(veh_id, [traci.constants.VAR_POSITION, traci.constants.VAR_SPEED])
+    positions = traci.vehicle.getAllSubscriptionResults()
+    print(positions)
+
+
+
     traci.simulationStep()
     timestep(traci,n_step)
     n_step += 1

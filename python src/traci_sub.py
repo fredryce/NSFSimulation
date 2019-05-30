@@ -39,9 +39,15 @@ for step in range(3):
 traci.close()
 
 '''
+print('len is ', len(traci.vehicle.getIDList()))
+print(type(traci.vehicle.getIDList()))
+'''
 while True: 
     for veh_id in traci.simulation.getDepartedIDList():
     	traci.vehicle.subscribe(veh_id, [traci.constants.VAR_POSITION])
     positions = traci.vehicle.getAllSubscriptionResults()
     traci.simulationStep()
-    print(positions)
+    if positions:
+    	print(positions)
+'''
+traci.close()
